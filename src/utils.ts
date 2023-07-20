@@ -47,7 +47,7 @@ export async function writePrettyFile(path: string, content: string, overwrite =
  * @param transform is the transform function returning a new value to transform the object.
  * @returns new object.
  */
-export function transformObject<T extends object, K extends keyof T>(
+export function transformObject<T extends Record<string, unknown>, K extends keyof T>(
   data: T | undefined,
   {
     filter = () => true,
