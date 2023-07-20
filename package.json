@@ -35,7 +35,7 @@
   "scripts": {
     "build": "swpm run base:build",
     "commit": "swpm run base:commit",
-    "commitlint": "base:commitlint",
+    "commitlint": "swpm run base:commitlint",
     "docs:api": "echo No docs needed for this library.",
     "verify": "swpm run base:verify",
     "lint": "swpm run base:lint",
