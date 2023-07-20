@@ -35,8 +35,6 @@ jobs:
           path: "package.json"
           prop_path: "swpm"
 
-      - run: echo ${{steps.get_package_manager.outputs.prop}}
-
       - name: Setup pnpm
         if: steps.get_package_manager.outputs.prop == 'pnpm'
         uses: pnpm/action-setup@v2
@@ -49,10 +47,10 @@ jobs:
           cache: ${{steps.get_package_manager.outputs.prop}}
 
       - name: Install project
-        run: swpm install
+        run: npx swpm install
 
       - name: Verify & Build
-        run: concurrently --kill-others-on-fail -g -c 'auto' -n '    Audit   ,Dependencies,    Lint    ,   Format   ,    Test    ,    Build   ' 'audit-ci -c' 'knip' 'swpm run lint --no-fix --no-eslintrc -c ./.eslintrc-maximum.cjs' 'swpm run format --no-write --no-list-different --check' 'swpm test' 'swpm run build'
+        run: npx concurrently --kill-others-on-fail -g -c 'auto' -n '    Audit   ,Dependencies,    Lint    ,   Format   ,    Test    ,    Build   ' 'audit-ci -c' 'knip' 'swpm run lint --no-fix --no-eslintrc -c ./.eslintrc-maximum.cjs' 'swpm run format --no-write --no-list-different --check' 'swpm test' 'swpm run build'
 
       - name: Release
         if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'

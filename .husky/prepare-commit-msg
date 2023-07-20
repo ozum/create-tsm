@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname $0)/_/husky.sh"
 
-exec < /dev/tty && node_modules/.bin/swpm run commit || true
+exec < /dev/tty && npx swpm run commit || true
