@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "extends": "./config/tsm/tsconfig.build.json",
+  "include": ["src/**/*"],
+  "exclude": ["*.spec.ts", "*.test.ts", "*.e2e.ts"]
+}

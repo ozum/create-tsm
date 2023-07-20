@@ -1,0 +1,119 @@
+{
+  "name": "@ozum/create-tsm",
+  "version": "0.0.0",
+  "description": "Highly opinionated and customizable boilerplate for creating and updating TypeScript modules.",
+  "type": "module",
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "types": "dist/index.d.ts",
+  "bin": {
+    "tsm": "dist/bin/create-tsm.js",
+    "update": "dist/bin/create-tsm.js"
+  },
+  "files": [
+    "dist",
+    "config",
+    ".czrc",
+    ".editorconfig",
+    ".eslintrc-maximum.cjs",
+    ".eslintrc.cjs",
+    ".gitattributes",
+    ".gitignore",
+    ".husky",
+    "commitlint.config.js",
+    "jest.config.js",
+    "lint-staged.config.js",
+    "prettier.config.js",
+    "tsconfig.build.json",
+    "tsconfig.json",
+    "typedoc.config.cjs"
+  ],
+  "swpm": "pnpm",
+  "scripts": {
+    "build": "swpm run base:build",
+    "commit": "swpm run base:commit",
+    "commitlint": "base:commitlint",
+    "docs:api": "echo No docs needed for this library.",
+    "verify": "swpm run base:verify",
+    "lint": "swpm run base:lint",
+    "format": "swpm run base:format",
+    "release": "swpm run base:release",
+    "test": "echo No tests are available. Skipping testing step.",
+    "dev": "swpm run base:dev",
+    "precommit": "swpm run base:precommit",
+    "prepare": "swpm run base:prepare",
+    "base:build": "tsc --project tsconfig.build.json",
+    "base:commit": "git-cz --hook",
+    "base:commitlint": "commitlint --edit ${1}",
+    "base:docs:api": "typedoc",
+    "base:verify": "concurrently -g -c 'auto' -n '    Audit   ,Dependencies,    Lint    ,   Format   ,    Test    ' 'audit-ci -c' 'knip' 'swpm run lint' 'swpm run format' 'swpm test'",
+    "base:lint": "eslint --ignore-path .gitignore --cache --max-warnings 0 --fix .",
+    "base:format": "prettier . --list-different --write --ignore-path .gitignore",
+    "base:release": "swpm run docs:api && git pull && git add -A && git commit && git push --follow-tags",
+    "base:test": "jest --coverage",
+    "base:dev": "tsc --project tsconfig.build.json --watch",
+    "base:precommit": "lint-staged && concurrently -g -c 'auto' -n '    Audit   ,Dependencies' 'audit-ci -c' 'knip'",
+    "base:prepare": "is-ci || husky install"
+  },
+  "license": "ISC",
+  "keywords": [
+    "boilerplate",
+    "TypeScript",
+    "config",
+    "initializer",
+    "updater",
+    "development workflow"
+  ],
+  "author": "Özüm Eldoğan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozum/create-tsm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ozum/create-tsm/issues"
+  },
+  "homepage": "https://github.com/ozum/create-tsm#readme",
+  "dependencies": {
+    "@octokit/rest": "^20.0.1",
+    "fast-equals": "^5.0.1",
+    "generate-license-file": "^2.0.0",
+    "inquirer": "^9.2.8",
+    "inquirer-npm-name": "^4.0.0",
+    "libsodium-wrappers": "^0.7.11",
+    "prettier": "^3.0.0",
+    "read-git-user": "^2.1.0",
+    "simple-git": "^3.19.1",
+    "swpm": "^1.11.0",
+    "user-meta": "^1.0.0",
+    "which-package-manager": "^0.0.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.7",
+    "@swc/core": "^1.3.70",
+    "@swc/jest": "^0.2.27",
+    "@types/inquirer": "^9.0.3",
+    "@types/inquirer-npm-name": "^3.0.4",
+    "@types/jest": "^29.5.3",
+    "@types/libsodium-wrappers": "^0.7.10",
+    "audit-ci": "^6.6.1",
+    "commitizen": "^4.3.0",
+    "concurrently": "^8.2.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.45.0",
+    "eslint-config-ozum": "^1.0.1",
+    "husky": "^8.0.3",
+    "is-ci": "^3.0.1",
+    "jest": "^29.6.1",
+    "knip": "^2.16.0",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.0",
+    "type-fest": "^4.0.0",
+    "typedoc": "^0.24.8",
+    "typedoc-plugin-markdown": "^3.15.3",
+    "typescript": "^5.1.6"
+  }
+}

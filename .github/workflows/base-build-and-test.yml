@@ -1,0 +1,62 @@
+name: Build and Test
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+
+    steps:
+      - name: Start PostgreSQL
+        if: env.POSTGRESQL == 'true'
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+
+      - name: Create additional PostgreSQL user
+        if: env.POSTGRESQL == 'true'
+        run: sudo -u postgres psql --command="CREATE USER \"user\" PASSWORD 'password' SUPERUSER CREATEDB REPLICATION" --command="\du"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Package Manager
+        id: get_package_manager
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: "package.json"
+          prop_path: "swpm"
+
+      - run: echo ${{steps.get_package_manager.outputs.prop}}
+
+      - name: Setup pnpm
+        if: steps.get_package_manager.outputs.prop == 'pnpm'
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: ${{steps.get_package_manager.outputs.prop}}
+
+      - name: Install project
+        run: swpm install
+
+      - name: Verify & Build
+        run: concurrently --kill-others-on-fail -g -c 'auto' -n '    Audit   ,Dependencies,    Lint    ,   Format   ,    Test    ,    Build   ' 'audit-ci -c' 'knip' 'swpm run lint --no-fix --no-eslintrc -c ./.eslintrc-maximum.cjs' 'swpm run format --no-write --no-list-different --check' 'swpm test' 'swpm run build'
+
+      - name: Release
+        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: swpx semantic-release
