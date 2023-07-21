@@ -81,6 +81,8 @@ Below are `package.json` scripts generated and their default behavior. Scripts s
 | precommit  | :heavy_exclamation_mark: | Executes [Lint Staged](https://github.com/okonet/lint-staged) tasks and verifications.                                                                                                                                                                                                                                                                                           |
 | prepare    | :heavy_exclamation_mark: | Ensures [Husky](https://typicode.github.io/husky/) is installed.                                                                                                                                                                                                                                                                                                                 |
 
+<br/>
+
 | Legend                   | Purpose        | Description                                                                      |
 | ------------------------ | -------------- | -------------------------------------------------------------------------------- |
 | :smiley:                 | For end user   | Should be used by the end user in a normal workflow.                             |
