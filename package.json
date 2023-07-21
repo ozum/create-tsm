@@ -21,6 +21,7 @@
     ".eslintrc-maximum.cjs",
     ".eslintrc.cjs",
     ".gitattributes",
+    ".github",
     ".gitignore",
     ".husky",
     "commitlint.config.js",
