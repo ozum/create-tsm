@@ -7,7 +7,7 @@ import { getTemplatePath } from "./utils.js";
 
 export async function generate(answers?: Answers): Promise<void> {
   if (getTemplatePath(".") === process.cwd()) throw new Error("Source and destination paths are same.");
-  const [needsInstall] = await Promise.all([createOrUpdatePackageJson(answers), copyConfigs()]);
+  const [needsInstall] = await Promise.all([createOrUpdatePackageJson(answers), copyConfigs(answers)]);
   if (needsInstall) spawn("swpm", ["install"], { stdio: "inherit" });
   await generateLicenseFile("./package.json", "./LICENSE");
   console.info(`Package ${answers ? `created:${answers.packageName}` : "updated"}`);

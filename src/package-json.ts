@@ -35,6 +35,7 @@ async function createPackageJson(answers: Answers): Promise<boolean> {
     version: "0.0.0",
     description: answers.description,
     type: "module",
+    publishConfig: { access: "public" },
     release: { branches: ["main"] },
     exports: "./dist",
     types: "dist/index.d.ts",

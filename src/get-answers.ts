@@ -7,6 +7,7 @@ import { getDefaultPackageName, getDefaultAuthor, parseJsonSafe } from "./utils.
 export interface Answers {
   packageName: string;
   packageManager: "npm" | "pnpm" | "yarn" | "yarn@berry";
+  useSharedGitHubWorkflow: boolean;
   description: string;
   repository: PackageJson["repository"];
   githubToken?: string;
@@ -39,6 +40,12 @@ export async function getAnswers(): Promise<Answers> {
       message: "package manager",
       choices: ["npm", "pnpm", "yarn", "yarn@berry"],
       default: "npm",
+    },
+    {
+      type: "confirm",
+      name: "useSharedGitHubWorkflow",
+      message: "use shared GitHub workflow",
+      default: true,
     },
     {
       type: "input",
