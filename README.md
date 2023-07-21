@@ -12,14 +12,14 @@ No need to install anything. Just use your package manager.
 
 ```sh
 $ mkdir my-project
-$ NPM_TOKEN=xyz123 GITHUB_TOKEN=xyz123 npm init @ozum/tsm
+$ NPM_TOKEN=xyz123 GITHUB_TOKEN=xyz123 npm init @ozum/tsm@latest
 ```
 
 **pnpm**
 
 ```sh
 $ mkdir my-project
-$ NPM_TOKEN=xyz123 GITHUB_TOKEN=xyz123 pnpm create @ozum/tsm
+$ NPM_TOKEN=xyz123 GITHUB_TOKEN=xyz123 pnpm create @ozum/tsm@latest
 ```
 
 ## Update

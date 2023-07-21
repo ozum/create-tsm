@@ -10,8 +10,7 @@
   },
   "types": "dist/index.d.ts",
   "bin": {
-    "tsm": "dist/bin/create-tsm.js",
-    "update": "dist/bin/create-tsm.js"
+    "tsm": "dist/bin/create-tsm.js"
   },
   "files": [
     "dist",
