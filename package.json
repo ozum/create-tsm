@@ -48,7 +48,7 @@
     "commitlint": "swpm run base:commitlint",
     "precommit": "swpm run base:precommit",
     "prepare": "swpm run base:prepare",
-    "base:verify": "concurrently -g -c 'auto' -n '    Audit   ,Dependencies,    Lint    ,   Format   ,    Test    ' 'audit-ci -c' 'knip' 'swpm run lint' 'swpm run format' 'swpm test'",
+    "base:verify": "concurrently -g -c auto -n '    Audit   ,Dependencies,    Lint    ,   Format   ,    Test    ' 'audit-ci -c' 'knip' 'swpm run lint' 'swpm run format' 'swpm test'",
     "base:release": "swpm run docs:api && git pull && git add -A && git commit && git push --follow-tags",
     "base:test": "jest --coverage",
     "base:dev": "tsc --project tsconfig.build.json --watch",
@@ -58,7 +58,7 @@
     "base:docs:api": "typedoc",
     "base:commit": "git-cz --hook",
     "base:commitlint": "commitlint --edit ${1}",
-    "base:precommit": "lint-staged && concurrently -g -c 'auto' -n '    Audit   ,Dependencies' 'audit-ci -c' 'knip'",
+    "base:precommit": "lint-staged && concurrently -g -c auto -n '    Audit   ,Dependencies' 'audit-ci -c' 'knip'",
     "base:prepare": "is-ci || husky install"
   },
   "license": "ISC",
