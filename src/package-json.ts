@@ -1,5 +1,5 @@
-import type { PackageJson } from "type-fest";
 import { readFile } from "node:fs/promises";
+import type { PackageJson } from "type-fest";
 import { deepEqual } from "fast-equals";
 import { whichPackageManager } from "which-package-manager";
 import { getTemplateContent, writePrettyFile, fileExists, transformObject } from "./utils.js";
