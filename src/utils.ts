@@ -26,7 +26,7 @@ export async function fileExists(path: string): Promise<boolean> {
 }
 
 export async function writePrettyFile(path: string, content: string, overwrite = false): Promise<void> {
-  const ext = extname(path);
+  const ext: string = extname(path);
 
   await mkdir(dirname(path), { recursive: true }); // make sure the path exists
 

@@ -15,7 +15,7 @@ async function isConfigForTarget(src: string): Promise<boolean> {
 export default async function copyConfigs(answers?: Answers) {
   const sourceGitHubWorkflowPath = answers?.useSharedGitHubWorkflow
     ? ".github/workflows/tsm-build-and-test.yml"
-    : "config/tsm/tsm-build-and-test-independent";
+    : "config/tsm/tsm-build-and-test-independent.yml";
 
   await Promise.all([
     cp(getTemplatePath("."), ".", { recursive: true, filter: isConfigForTarget, force: false }),

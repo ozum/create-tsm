@@ -83,11 +83,11 @@ Below are `package.json` scripts generated and their default behavior. Scripts s
 
 <br/>
 
-| Legend                   | Purpose        | Description                                                                      |
-| ------------------------ | -------------- | -------------------------------------------------------------------------------- |
-| :smiley:                 | For end user   | Should be used by the end user in a normal workflow.                             |
-| :question:               | Occasional use | Used by end user occasionally when needed.                                       |
-| :heavy_exclamation_mark: | Special need   | Normally not used by en user. Only needed for customization or special purposes. |
+| Legend                   | Purpose        | Description                                                                       |
+| ------------------------ | -------------- | --------------------------------------------------------------------------------- |
+| :smiley:                 | For end user   | Should be used by the end user in a normal workflow.                              |
+| :question:               | Occasional use | Used by end user occasionally when needed.                                        |
+| :heavy_exclamation_mark: | Special need   | Normally not used by end user. Only needed for customization or special purposes. |
 
 ## No Monorepo Support
 
