@@ -62,9 +62,34 @@ export function transformObject<T extends Record<string, unknown>, K extends key
   ) as unknown as Partial<T>;
 }
 
+/**
+ * Gets monorepo name from directory name if project is a monorepo. Currently supports:
+ * - Turbo Repo
+ */
+function getMonoRepoName(): string | undefined {
+  const [monoRepoDir, parentDir] = process.cwd().split(sep).slice(-3);
+  return parentDir === "packages" || parentDir === "apps" ? monoRepoDir : undefined;
+}
+
+/**
+ * Gets node package's scope name if it is a scoped package.
+ */
+function getPackageScope(): string | undefined {
+  const pathArray = process.cwd().split(sep);
+  const scopeDir = getMonoRepoName() ? pathArray.at(-4) : pathArray.at(-2);
+  return scopeDir?.startsWith("@") ? scopeDir : undefined;
+}
+
 export function getDefaultPackageName(): string {
-  const [parentDir, dir] = process.cwd().split(sep).slice(-2);
-  return parentDir.startsWith("@") ? `${parentDir}/${dir}` : dir;
+  const pathArray = process.cwd().split(sep);
+  const dir = pathArray.at(-1) as string;
+  const packageScope = getPackageScope();
+  return packageScope ? `${packageScope}/${dir}` : dir;
+}
+
+export function getDefaultRepoName(packageName: string): string {
+  const packageNameWithoutScope = packageName.split("/").pop() as string;
+  return getMonoRepoName() ?? packageNameWithoutScope;
 }
 
 export function getDefaultAuthor(gitUserName?: string): { name: string; email: string; url: string } {

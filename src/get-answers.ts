@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import askName from "inquirer-npm-name";
 import type { PackageJson } from "type-fest";
 import readGitUser from "read-git-user";
-import { getDefaultPackageName, getDefaultAuthor, parseJsonSafe } from "./utils.js";
+import { getDefaultPackageName, getDefaultAuthor, parseJsonSafe, getDefaultRepoName } from "./utils.js";
 
 export interface Answers {
   packageName: string;
@@ -31,8 +31,6 @@ export async function getAnswers(): Promise<Answers> {
     inquirer,
   );
 
-  const repoName = packageNameAnswer.packageName.split("/").pop();
-
   const questions = [
     {
       type: "list",
@@ -55,7 +53,10 @@ export async function getAnswers(): Promise<Answers> {
       type: "input",
       name: "repository",
       message: "repository",
-      default: JSON.stringify({ type: "git", url: `https://github.com/${gitUser.username}/${repoName}` }),
+      default: JSON.stringify({
+        type: "git",
+        url: `https://github.com/${gitUser.username}/${getDefaultRepoName(packageNameAnswer.packageName)}`,
+      }),
     },
     {
       type: "input",
@@ -96,7 +97,7 @@ export async function getAnswers(): Promise<Answers> {
     npmToken: answers.npmToken ?? undefined,
     githubToken: answers.githubToken ?? undefined,
     keywords: (answers.keywords as string).split(/\s*,\s*/),
-    repoName,
+    repoName: (answers.repository as string).split("/").pop(), // https:/.../ozum/my-project -> my-project
     gitUser,
   } as Answers;
 }
