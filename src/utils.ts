@@ -128,3 +128,39 @@ export async function createNpmTokenSecret(octokit: Octokit, answers: Answers): 
 
   console.info("Secret added to repository: NPM_TOKEN");
 }
+
+/**
+ * Gets license text for the given license type, author and year.
+ *
+ * @param license is the type of license. (isc, mit, etc.)
+ * @param authorName is the name of the author
+ * @param year is the year of the license.
+ * @returns license text.
+ */
+async function getLicense(license: string, authorName = "The Author", year = new Date().getFullYear()): Promise<string> {
+  const response = await fetch(`https://api.github.com/licenses/${license}`);
+  const licenseText = ((await response.json()) as { body: string }).body;
+  const yearText = year.toString();
+
+  return licenseText
+    .replaceAll("[year]", yearText)
+    .replaceAll("[yyyy]", yearText)
+    .replaceAll("<year>", yearText)
+    .replaceAll("[name of copyright owner]", authorName)
+    .replaceAll("[fullname]", authorName)
+    .replaceAll("<name of author>", authorName);
+}
+
+/**
+ * Writes license text for the given license type to the LICENSE file.
+ *
+ * @param license is the type of license. (isc, mit, etc.)
+ * @param authorName is the name of the author
+ * @param year is the year of the license.
+ */
+export async function createLicenseFile(answers?: Answers): Promise<void> {
+  if (!answers) return;
+  const authorName = typeof answers.author === "object" ? answers.author.name : answers.author;
+  const licenseText = await getLicense(answers.license, authorName);
+  await writeFile("LICENSE", licenseText);
+}
