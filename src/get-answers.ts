@@ -55,7 +55,7 @@ export async function getAnswers(): Promise<Answers> {
       message: "repository",
       default: JSON.stringify({
         type: "git",
-        url: `https://github.com/${gitUser.username}/${getDefaultRepoName(packageNameAnswer.packageName)}`,
+        url: `https://github.com/${gitUser.username}/${getDefaultRepoName(packageNameAnswer.packageName as string)}`,
       }),
     },
     {
