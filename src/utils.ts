@@ -100,6 +100,24 @@ export function getDefaultAuthor(gitUserName?: string): { name: string; email: s
   };
 }
 
+/**
+ * Returns repository name.
+ *
+ * @param repository is the URL or JSON string.
+ * @returns if input is a JSON string parses and returns `url` value, otherwise returns the string as is.
+ *
+ * @example
+ * getRepoName('{ "type":"git","url":"https://github.com/ozum/my-repo" }'); // my-repo
+ * getRepoName(https://github.com/ozum/my-repo'); // my-repo
+ */
+export function getRepoName(repository: string): string {
+  const repo = parseJsonSafe(repository);
+  const url = (typeof repo === "object" ? repo.url : repo) as string;
+  const name = url.split("/").pop();
+  if (name === undefined) throw new Error(`Cannot determine repo name from ${repository}`);
+  return name;
+}
+
 export function parseJsonSafe(input?: unknown): Record<string, string> | string {
   if (typeof input !== "string") return "";
   try {

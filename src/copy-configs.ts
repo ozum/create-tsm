@@ -25,5 +25,5 @@ export default async function copyConfigs(answers?: Answers) {
     cp(getTemplatePath("config/tsm"), "config/tsm", { recursive: true, force: true }),
   ]);
 
-  await rename(".npmignore", ".gitignore"); // NPM package renames `.gitignore` as `.npmignore`. Reverse it by renaming `.gitignore` as `.npmignore`.
+  await rename(".npmignore", ".gitignore"); // During publishing NPM package renames `.gitignore` as `.npmignore`. Reverse it by renaming `.gitignore` as `.npmignore`.
 }

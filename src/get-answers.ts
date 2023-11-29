@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import askName from "inquirer-npm-name";
 import type { PackageJson } from "type-fest";
 import readGitUser from "read-git-user";
-import { getDefaultPackageName, getDefaultAuthor, parseJsonSafe, getDefaultRepoName } from "./utils.js";
+import { getDefaultPackageName, getDefaultAuthor, parseJsonSafe, getDefaultRepoName, getRepoName } from "./utils.js";
 
 export interface Answers {
   packageName: string;
@@ -97,7 +97,7 @@ export async function getAnswers(): Promise<Answers> {
     npmToken: answers.npmToken ?? undefined,
     githubToken: answers.githubToken ?? undefined,
     keywords: (answers.keywords as string).split(/\s*,\s*/),
-    repoName: (answers.repository as string).split("/").pop(), // https:/.../ozum/my-project -> my-project
+    repoName: getRepoName(answers.repository as string),
     gitUser,
   } as Answers;
 }
