@@ -1,9 +1,9 @@
 import { cp, lstat, rename } from "node:fs/promises";
 import { basename, join } from "node:path";
 import { type Answers } from "./get-answers.js";
-import { getTemplatePath } from "./utils.js";
+import { fileExists, getTemplatePath } from "./utils.js";
 
-const DONT_COPY = new Set(["package.json", "README.md", "LICENSE", ".eslintcache", ".gitignore"]);
+const DONT_COPY = new Set(["package.json", "README.md", "LICENSE", ".eslintcache"]);
 
 async function isConfigForTarget(src: string): Promise<boolean> {
   const stats = await lstat(src);
@@ -25,5 +25,5 @@ export default async function copyConfigs(answers?: Answers) {
     cp(getTemplatePath("config/tsm"), "config/tsm", { recursive: true, force: true }),
   ]);
 
-  await rename(".npmignore", ".gitignore"); // During publishing NPM package renames `.gitignore` as `.npmignore`. Reverse it by renaming `.gitignore` as `.npmignore`.
+  if (await fileExists(".npmignore")) await rename(".npmignore", ".gitignore"); // During publishing NPM package renames `.gitignore` as `.npmignore`. So this library does not have `.gitignore` in npm published package. Reverse it by renaming `.gitignore` as `.npmignore`.
 }

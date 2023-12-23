@@ -157,8 +157,10 @@ export async function createNpmTokenSecret(octokit: Octokit, answers: Answers): 
  */
 async function getLicense(license: string, authorName = "The Author", year = new Date().getFullYear()): Promise<string> {
   const response = await fetch(`https://api.github.com/licenses/${license}`);
-  const licenseText = ((await response.json()) as { body: string }).body;
+  const licenseText = ((await response.json()) as { body?: string }).body;
   const yearText = year.toString();
+
+  if (licenseText === undefined) return `© ${yearText} ${authorName}. All Rights Reserved.`;
 
   return licenseText
     .replaceAll("[year]", yearText)
