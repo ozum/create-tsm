@@ -45,6 +45,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: ${{steps.get_package_manager.outputs.prop}}
+          node-version: "lts/*"
 
       - name: Install project
         run: npx swpm install
