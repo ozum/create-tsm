@@ -39,6 +39,9 @@ jobs:
           cache: 'pnpm'
           node-version: "lts/*"
 
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Verify & Build
         run: npx concurrently --kill-others-on-fail -g -c auto -n '    Audit   ,Dependencies,    Check   ,    Test    ,    Build   ' 'audit-ci -c' 'knip' 'biome ci .' 'pnpm test' 'pnpm build'
 
