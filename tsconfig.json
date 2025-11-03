@@ -1,8 +1,8 @@
 {
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "extends": "./config/tsm/tsconfig.json",
-  "include": ["src/**/*", "test/**/*"],
-  "ts-node": { "swc": true, "esm": true }
+	"compilerOptions": {
+		"outDir": "dist"
+	},
+	"extends": "./config/tsm/tsconfig.json",
+	"include": ["src/**/*", "test/**/*"]
+	//"ts-node": { "swc": true, "esm": true }
 }

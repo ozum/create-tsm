@@ -1,0 +1,3 @@
+{
+	"extends": ["./config/tsm/base-biome.jsonc"]
+}

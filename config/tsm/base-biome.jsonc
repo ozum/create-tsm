@@ -1,0 +1,33 @@
+// {
+//   "overrides": [
+//     {
+//       "includes": ["*.ts", "*.tsx"],
+//       "linter": {
+//         "rules": {
+//           "complexity": { "noForEach": "off", "noUselessConstructor": "error" },
+//           "correctness": {
+//             "noInvalidUseBeforeDeclaration": "error",
+//             "noUndeclaredDependencies": "off",
+//           },
+//           "suspicious": {
+//             "noConsole": {
+//               "level": "error",
+//               "options": { "allow": ["info", "warn", "error"] },
+//             },
+//             "noPrototypeBuiltins": "off",
+//           },
+//         },
+//       },
+//     },
+//     { "includes": ["*.js"] },
+//     { "includes": ["*.cjs"] },
+//   ],
+// }
+{
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true,
+		"defaultBranch": "main"
+	}
+}
